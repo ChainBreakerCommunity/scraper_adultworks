@@ -45,7 +45,7 @@ git commit -m "$parameterA"
 if [ $parameterB == 'yes' ]
 then
    heroku login
-   heroku git:remote -a cb-scraper-adultworks
+   heroku git:remote -a scraper-adultworks
    #git push heroku
 fi
 

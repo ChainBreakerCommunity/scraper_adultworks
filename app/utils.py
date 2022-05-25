@@ -52,9 +52,12 @@ def getTitle(driver: webdriver):
     return text
 
 def getText(driver: webdriver):
-    text = driver.find_element_by_id("content1").text
-    text = clean_string(text)
-    return text
+    try:
+        text = driver.find_element_by_id("content1").text
+        text = clean_string(text)
+        return text
+    except:
+        return None
 
 def getDateScrap():
     return datetime.date.today()
@@ -70,6 +73,11 @@ def getPostDate(text: str):
     time = datetime.datetime.strptime(text, '%d/%m/%Y')  # año mes dia
     time = time.strftime("%Y-%m-%d")
     return time
+
+def getAge(text: str):
+    if text != "not specified":
+        return ""
+    else: return text
 
 def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
     
@@ -91,6 +99,9 @@ def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
     id_page = dicc["id_page"]
     title = getTitle(driver)
     text = getText(driver)
+    if text == None:
+        return None
+
     category = constants.CATEGORY
     first_post_date = getPostDate(assign_value(dicc_fields, "post_date"))
 
@@ -111,9 +122,9 @@ def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
     longitude = "" # Not provided.
     comments = []  # Doesnt have comments, just Q&A
 
-    ethnicity = ""
+    ethnicity = constants.ETHNICITY
     nationality = assign_value(dicc_fields, "nationality")
-    age = assign_value(dicc_fields, "age")
+    age = getAge(assign_value(dicc_fields, "age"))
 
     # Upload ad in database.
     status_code = client.insert_ad(author, language, link, id_page, title, text, category, first_post_date, date_scrap, website, phone, country, region, city, place, email, verified_ad, prepayment, promoted_ad, external_website,
