@@ -1,3 +1,7 @@
+# Ignore directories
+/chromedriver.exe
+test
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
