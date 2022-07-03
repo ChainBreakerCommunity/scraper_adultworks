@@ -1,7 +1,0 @@
-{
-    "endpoint":"https://chainbreaker-server-heroku.herokuapp.com/",
-    "endpoint_test": "http://localhost:8100",
-    "username": "chainbreakerinfo@gmail.com", 
-    "password": "chain#6125",
-    "selenium_endpoint": "http://localhost:4444"
-}
