@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, send_file
 from flask.helpers import send_from_directory
 from flask_cors import CORS
 import bot.bot 
@@ -25,6 +25,11 @@ def execute_scraper():
     else:
         bot.bot.execute_scraper()
     return jsonify({"message": "bot executed"}), 200
+
+@app.route("/get_logging", methods=["POST"])
+def get_logging():
+    data = request.values
+    return send_file("./logger/{route}.log".format(route = data["route"])), 200
 
 if __name__ == '__main__':
     debug = (config["DEBUG"] == "TRUE")
