@@ -26,7 +26,7 @@ logger = get_logger(__name__, level = "DEBUG", stream = True)
 def enterAdultWork(constants, driver: Chrome):
     # Enter adult work.
     driver.get(constants.SITE)
-    print("Current URL: ", driver.current_url)
+    logger.info("Current URL: ", driver.current_url)
 
     # Select country and accept.
     tds = driver.find_elements(By.TAG_NAME, "td")
