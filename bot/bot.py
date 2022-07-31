@@ -60,7 +60,7 @@ def enterAdultWork(constants, driver: Chrome):
     driver.find_element(By.NAME, "btnSearch").click()
 
 def main(constants):
-    endpoint = config["ENDPOINT_TEST"]
+    endpoint = config["ENDPOINT"]
     user = config["USERNAME"]
     password = config["PASSWORD"]
     
