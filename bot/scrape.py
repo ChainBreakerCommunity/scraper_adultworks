@@ -98,6 +98,7 @@ def getAge(text: str):
     else: return text
 
 def getScreenshot(driver: Chrome):
+    driver.execute_script("window.scrollTo(0,0)")
     driver.save_screenshot("ss.png")
     res = ipfs_client.add("ss.png")
     return res["Hash"]
@@ -149,7 +150,7 @@ def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
 
     # Upload ad in database.
     data, res = client.insert_ad(author, language, link, id_page, title, text, category, first_post_date, date_scrap, website, phone, country, region, city, place, email, external_website,
-            reviews_website, comments, latitude, longitude, ethnicity, nationality, screenshot, age) # Eliminar luego
+            reviews_website, comments, latitude, longitude, ethnicity, nationality, age, screenshot) # Eliminar luego
     # Log results.
     logger.info("Data sent to server: ")
     logger.info(data)
