@@ -1,10 +1,7 @@
-from webbrowser import Chrome
 import bot.constants_ir
 import bot.constants_uk
 import bot.scrape
 import sys
-import json
-import warnings
 
 from selenium import webdriver
 from selenium.webdriver import Chrome
@@ -13,7 +10,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 from chainbreaker_api import ChainBreakerScraper
-import json
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -26,7 +22,7 @@ logger = get_logger(__name__, level = "DEBUG", stream = True)
 def enterAdultWork(constants, driver: Chrome):
     # Enter adult work.
     driver.get(constants.SITE)
-    logger.info("Current URL: ", driver.current_url)
+    logger.info("Current URL: " +  str(driver.current_url))
 
     # Select country and accept.
     tds = driver.find_elements(By.TAG_NAME, "td")
@@ -64,7 +60,7 @@ def enterAdultWork(constants, driver: Chrome):
     driver.find_element(By.NAME, "btnSearch").click()
 
 def main(constants):
-    endpoint = config["ENDPOINT"]
+    endpoint = config["ENDPOINT_TEST"]
     user = config["USERNAME"]
     password = config["PASSWORD"]
     

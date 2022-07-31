@@ -4,6 +4,8 @@ from dateutil.parser import parse
 from chainbreaker_api import ChainBreakerScraper
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Chrome
+import ipfshttpclient
+ipfs_client = ipfshttpclient.connect('/dns/ipfs.infura.io/tcp/5001/https')
 
 from logger.logger import get_logger
 logger = get_logger(__name__, level = "DEBUG", stream = True)
@@ -95,6 +97,12 @@ def getAge(text: str):
         return ""
     else: return text
 
+def getScreenshot(driver: Chrome):
+    driver.save_screenshot("ss.png")
+    res = ipfs_client.add("ss.png")
+    return res["Hash"]
+
+
 def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
     
     # Get phone or whatsapp
@@ -122,9 +130,6 @@ def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
     date_scrap = getDateScrap()
     website = bot.constants.SITE_NAME
 
-    verified_ad = ""          # Not provided
-    prepayment = ""           # Not provided
-    promoted_ad = ""          # Not provided
     external_website = ""     # Not provided
     reviews_website = ""      # Not provided
     country = bot.constants.COUNTRY
@@ -140,9 +145,11 @@ def scrap_ad_link(client: ChainBreakerScraper, driver, dicc: dict):
     nationality = assign_value(dicc_fields, "nationality")
     age = getAge(assign_value(dicc_fields, "age"))
 
+    screenshot = getScreenshot(driver)
+
     # Upload ad in database.
-    data, res = client.insert_ad(author, language, link, id_page, title, text, category, first_post_date, date_scrap, website, phone, country, region, city, place, email, verified_ad, prepayment, promoted_ad, external_website,
-            reviews_website, comments, latitude, longitude, ethnicity, nationality, age) # Eliminar luego
+    data, res = client.insert_ad(author, language, link, id_page, title, text, category, first_post_date, date_scrap, website, phone, country, region, city, place, email, external_website,
+            reviews_website, comments, latitude, longitude, ethnicity, nationality, screenshot, age) # Eliminar luego
     # Log results.
     logger.info("Data sent to server: ")
     logger.info(data)
