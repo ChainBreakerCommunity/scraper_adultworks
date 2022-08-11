@@ -4,8 +4,8 @@ from dateutil.parser import parse
 from chainbreaker_api import ChainBreakerScraper
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Chrome
-import ipfshttpclient
-ipfs_client = ipfshttpclient.connect('/dns/ipfs.infura.io/tcp/5001/https')
+#import ipfshttpclient
+#ipfs_client = ipfshttpclient.connect('/dns/ipfs.infura.io/tcp/5001/https')
 
 from logger.logger import get_logger
 logger = get_logger(__name__, level = "DEBUG", stream = True)
@@ -98,6 +98,7 @@ def getAge(text: str):
     else: return text
 
 def getScreenshot(driver: Chrome):
+    return ""
     driver.execute_script("window.scrollTo(0,0)")
     driver.save_screenshot("ss.png")
     res = ipfs_client.add("ss.png")
