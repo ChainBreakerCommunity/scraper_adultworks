@@ -2,6 +2,7 @@ import bot.constants_ir
 import bot.constants_uk
 import bot.scrape
 import sys
+import datetime 
 
 from selenium import webdriver
 from selenium.webdriver import Chrome
@@ -60,6 +61,9 @@ def enterAdultWork(constants, driver: Chrome):
     driver.find_element(By.NAME, "btnSearch").click()
 
 def main(constants):
+
+    start_time = datetime.datetime.now()
+
     endpoint = config["ENDPOINT"]
     user = config["USERNAME"]
     password = config["PASSWORD"]
@@ -93,12 +97,21 @@ def main(constants):
 
     # Page lists.
     for page in range(1, constants.MAX_PAGES + 1):
+
         logger.warning("# Page: " + str(page))
 
         # Get list of ads.
         ads = driver.find_elements(By.CLASS_NAME, "Padded")
 
         for ad in ads:
+
+            # Check time limit.
+            current_time = datetime.datetime.now()
+            delta = current_time - start_time
+            sec = delta.total_seconds()
+            mins = sec / 60
+            if mins >= 60:
+                sys.exit()
 
             userId = 0
             try:
