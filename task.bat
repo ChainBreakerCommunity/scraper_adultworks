@@ -1,1 +1,1 @@
-C:\Users\Administrator\Desktop\Scrapers\scraper_adultworks\env\Scripts\activate && python C:\Users\Administrator\Desktop\Scrapers\scraper_adultworks\app.py
+C:\Users\Administrator\Desktop\Scrapers\scraper_leolist\env\Scripts\activate && python C:\Users\Administrator\Desktop\Scrapers\scraper_adultworks\app.py
