@@ -3,6 +3,7 @@ import bot.constants_uk
 import bot.scrape
 import sys
 import datetime 
+import time
 
 from selenium import webdriver
 from selenium.webdriver import Chrome
@@ -48,11 +49,17 @@ def enterAdultWork(constants, driver: Chrome):
     #driver.find_element_by_id(constants.COUNTRY_CODE).click()
     driver.switch_to.alert.accept()
 
+    # Sleep 5 seconds.
+    time.sleep(5)
+    
     # Display all advertisements.
     for tab in driver.find_elements(By.CLASS_NAME, "HomePageTabLink"):
         if tab.get_attribute("title") == "All Escorts":
             tab.click()
             break
+    
+    # Sleep 5 seconds.
+    time.sleep(5)
 
     # Filter by asian people.
     driver.find_element(By.XPATH, "//select[@name='question_7']/option[text()='Asian']").click()
